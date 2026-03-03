@@ -47,18 +47,19 @@ namespace drawing
             System.Windows.Shapes.Rectangle rect = new System.Windows.Shapes.Rectangle();
             rect.Width = Math.Abs(positions[0].X - positions[1].X);
             rect.Height = Math.Abs(positions[0].Y - positions[1].Y); 
-            /*
-            rect.X = (positions[0].X < positions[1].X) ? positions[0].X : positions[1].X;
-            rect.Y = (positions[0].Y < positions[1].Y) ? positions[0].Y : positions[1].Y; 
-            */
+            
+            int X = (positions[0].X < positions[1].X) ? positions[0].X : positions[1].X;
+            int Y = (positions[0].Y < positions[1].Y) ? positions[0].Y : positions[1].Y; 
+            
 
             rect.Fill = brush;
             rect.Stroke = brush;
             
 
-            Canvas.SetLeft(rect, 50);
-            Canvas.SetTop(rect, 50);
+            Canvas.SetLeft(rect, X);
+            Canvas.SetTop(rect, Y);
 
+            mw.AddShapeToCanvas(rect);
             
         }
     }

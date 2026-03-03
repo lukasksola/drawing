@@ -38,22 +38,24 @@ namespace drawing
                 CurrentShape = (string)btn.Content;
             }
         }
-        public Point MousePosition;
+        public System.Drawing.Point MousePosition;
 
-        public void AddShapeToCanvas()
+        public void AddShapeToCanvas(UIElement element)
         {
-
+            MainCanvas.Children.Add(element);
         }
 
         private void MainCanvas_MouseMove(object sender, MouseEventArgs e)
         {
-            MousePosition = e.MouseDevice.GetPosition(MainCanvas);
+            var mousePosition = e.MouseDevice.GetPosition(MainCanvas);
+            MousePosition.X = (int)mousePosition.X;
+            MousePosition.Y = (int)mousePosition.Y;
             CursorPos.Text = $"{MousePosition.X} {MousePosition.Y}" ;
         }
 
         private void MainCanvas_MouseUp(object sender, MouseButtonEventArgs e)
         {
-
+            shapeDrawer.DrawShape(CurrentShape, currentColor, (System.Drawing.Point)MousePosition);
         }
     }
 }
