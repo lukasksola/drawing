@@ -12,7 +12,7 @@ namespace drawing
 {
     public class ShapeDrawer
     {
-        public sMainWindow mw;
+        public MainWindow mw;
         public ShapeDrawer() { }
 
         public bool WaitingForAnotherClick;
