@@ -103,5 +103,32 @@ namespace drawing
             return JsonSerializer.Serialize(savedShapes.ToArray());
 
         }
+
+        public void LoadedFile(List<SaveFormat> loaded)
+        {
+            savedShapes = loaded;
+            foreach (SaveFormat saveFormat in savedShapes) {
+                if(saveFormat.shape == "Rectangle")
+                {
+                    System.Windows.Shapes.Rectangle rect = new System.Windows.Shapes.Rectangle();
+                    rect.Width = saveFormat.width;
+                    rect.Height = saveFormat.height;
+
+                    int X = saveFormat.pos[0];
+                    int Y = saveFormat.pos[1];
+
+                    SolidColorBrush brush = (SolidColorBrush)new BrushConverter().ConvertFromString(saveFormat.fill);
+                    rect.Fill = brush;
+                    rect.Stroke = brush;
+
+
+                    Canvas.SetLeft(rect, X);
+                    Canvas.SetTop(rect, Y);
+
+                    mw.AddShapeToCanvas(rect);
+                }
+            
+            }
+        }
     }
 }

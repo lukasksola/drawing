@@ -1,6 +1,8 @@
 ﻿using Microsoft.Win32;
+using System;
 using System.IO;
 using System.Text;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -63,7 +65,15 @@ namespace drawing
 
         private void LoadFile(object sender, RoutedEventArgs e)
         {
+            var FileDialog = new OpenFileDialog();
+            if (FileDialog.ShowDialog() == true) {
+                string json = File.ReadAllText(FileDialog.FileName);
 
+                List<SaveFormat> shapes = JsonSerializer.Deserialize<List<SaveFormat>>(json);
+                MainCanvas.Children.Clear();
+                shapeDrawer.LoadedFile(shapes);
+                
+            }
         }
         private void SaveFile(object sender, RoutedEventArgs e)
         {
@@ -81,6 +91,7 @@ namespace drawing
         private void Remove(object sender, RoutedEventArgs e)
         {
             MainCanvas.Children.Clear();
+            shapeDrawer.savedShapes.Clear();
         }
     }
 }
