@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 
 namespace drawing
@@ -19,7 +20,7 @@ namespace drawing
         public List<Point> positions = new List<Point>(); 
         public void DrawShape(string shape, SolidColorBrush brush, Point position)
         {
-            if(shape == "Rectangle")
+            if(shape == "Rectangle" || shape == "Circle" || shape == "Line")
             {
                 if(positions.Count == 0)
                 {
@@ -28,14 +29,22 @@ namespace drawing
                 {
                     positions.Add(position);
 
-                    CreateRectagle(brush);
+                    if(shape == "Rectangle")
+                    {
+                        CreateRectagle(brush);
+                    } else if(shape == "Line")
+                    {
+                        CreateLine(brush);
+
+                    } else if(shape == "Circle")
+                    {
+
+                    }
+
 
                     positions.Clear();
                 }
-            } else if(shape == "Circle")
-            {
-
-            } else if(shape == "Line")
+            } else
             {
 
             }
@@ -61,6 +70,22 @@ namespace drawing
 
             mw.AddShapeToCanvas(rect);
             
+        }
+
+        public void CreateLine(SolidColorBrush brush)
+        {
+            var myLine = new Line();
+            myLine.Stroke = brush;
+            myLine.StrokeThickness = 2;
+            myLine.Fill = brush;
+
+            myLine.X1 = positions[0].X;
+            myLine.Y1 = positions[0].Y;
+            myLine.X2 = positions[1].X;
+            myLine.Y2 = positions[1].Y;
+
+            mw.AddShapeToCanvas(myLine);
+
         }
     }
 }
