@@ -21,7 +21,7 @@
                 <Slider Width="150" Margin="0,10,0,0" Minimum="0" Maximum="255"  ValueChanged="Slider_ValueChanged" Name="Slider1"/>
                 <Slider Width="150" Margin="0,10,0,0" Minimum="0" Maximum="255"  ValueChanged="Slider_ValueChanged" Name="Slider2"/>
                 <Slider Width="150" Margin="0,10,0,0" Minimum="0" Maximum="255" ValueChanged="Slider_ValueChanged" Name="Slider3"/>
-                <Rectangle Height="20" Fill="Aquamarine" Name="ColorShower"/>
+                <Rectangle Height="20" Fill="Aquamarine" Name="ColorShower" Margin="1,5,1,0"/>
 
                 <Button Content="Rectangle" Margin="10,5,10,0" Click="NewShapeChosen"/>
                 <Button Content="Circle" Margin="10,5,10,0" Click="NewShapeChosen"/>

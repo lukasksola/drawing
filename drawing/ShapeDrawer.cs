@@ -108,7 +108,8 @@ namespace drawing
         {
             savedShapes = loaded;
             foreach (SaveFormat saveFormat in savedShapes) {
-                if(saveFormat.shape == "Rectangle")
+                SolidColorBrush brush = (SolidColorBrush)new BrushConverter().ConvertFromString(saveFormat.fill);
+                if (saveFormat.shape == "Rectangle")
                 {
                     System.Windows.Shapes.Rectangle rect = new System.Windows.Shapes.Rectangle();
                     rect.Width = saveFormat.width;
@@ -117,7 +118,6 @@ namespace drawing
                     int X = saveFormat.pos[0];
                     int Y = saveFormat.pos[1];
 
-                    SolidColorBrush brush = (SolidColorBrush)new BrushConverter().ConvertFromString(saveFormat.fill);
                     rect.Fill = brush;
                     rect.Stroke = brush;
 
@@ -126,6 +126,21 @@ namespace drawing
                     Canvas.SetTop(rect, Y);
 
                     mw.AddShapeToCanvas(rect);
+                } else if (saveFormat.shape == "Line")
+                {
+                    var myLine = new Line();
+                    myLine.Stroke = brush;
+                    myLine.StrokeThickness = 2;
+                    myLine.Fill = brush;
+
+                    myLine.X1 = saveFormat.pos[0];
+                    myLine.Y1 = saveFormat.pos[1];
+                    myLine.X2 = saveFormat.pos[2];
+                    myLine.Y2 = saveFormat.pos[3];
+
+
+                    mw.AddShapeToCanvas(myLine);
+                    
                 }
             
             }
