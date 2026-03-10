@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Shapes;
+using Point = System.Drawing.Point;
 
 namespace drawing
 {
@@ -17,7 +22,11 @@ namespace drawing
         public ShapeDrawer() { }
 
         public bool WaitingForAnotherClick;
-        public List<Point> positions = new List<Point>(); 
+        public List<Point> positions = new List<Point>();
+        public List<SaveFormat> savedShapes = new List<SaveFormat>();
+
+        public List<String> serializedShapes = new List<String>();
+
         public void DrawShape(string shape, SolidColorBrush brush, Point position)
         {
             if(shape == "Rectangle" || shape == "Circle" || shape == "Line")
@@ -69,7 +78,7 @@ namespace drawing
             Canvas.SetTop(rect, Y);
 
             mw.AddShapeToCanvas(rect);
-            
+            savedShapes.Add(new SaveFormat().Convert(rect, X, Y));
         }
 
         public void CreateLine(SolidColorBrush brush)
@@ -84,7 +93,14 @@ namespace drawing
             myLine.X2 = positions[1].X;
             myLine.Y2 = positions[1].Y;
 
+
             mw.AddShapeToCanvas(myLine);
+            savedShapes.Add(new SaveFormat().Convert(myLine));
+        }
+
+        public string SaveFile()
+        {
+            return JsonSerializer.Serialize(savedShapes.ToArray());
 
         }
     }

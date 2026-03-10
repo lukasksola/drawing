@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using Microsoft.Win32;
+using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -38,6 +40,7 @@ namespace drawing
                 CurrentShape = (string)btn.Content;
             }
         }
+
         public System.Drawing.Point MousePosition;
 
         public void AddShapeToCanvas(UIElement element)
@@ -55,7 +58,29 @@ namespace drawing
 
         private void MainCanvas_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            shapeDrawer.DrawShape(CurrentShape, currentColor, (System.Drawing.Point)MousePosition);
+            shapeDrawer.DrawShape(CurrentShape, currentColor, MousePosition);
+        }
+
+        private void LoadFile(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void SaveFile(object sender, RoutedEventArgs e)
+        {
+            if (MainCanvas.Children.Count != 0) {
+                var FileDialog = new SaveFileDialog();
+                if(FileDialog.ShowDialog() == true)
+                {
+                    File.WriteAllText(FileDialog.FileName, shapeDrawer.SaveFile());
+                }
+
+
+            }
+        }
+
+        private void Remove(object sender, RoutedEventArgs e)
+        {
+            MainCanvas.Children.Clear();
         }
     }
 }
